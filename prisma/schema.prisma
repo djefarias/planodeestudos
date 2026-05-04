@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  name           String?
+  hashedPassword String?
+  createdAt      DateTime @default(now())
+  materias       Materia[]
+  sessoes        Sessao[]
+  testes         Teste[]
+  materiais      MaterialEstudo[]
+}
+
+model Materia {
+  id        String   @id @default(cuid())
+  nome      String
+  peso      Int      @default(1)
+  questoes  Int      @default(10)
+  cor       String   @default("#60B5FF")
+  driveLink String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topicos   Topico[]
+  sessoes   Sessao[]
+  testes    Teste[]
+  createdAt DateTime @default(now())
+}
+
+model Topico {
+  id         String    @id @default(cuid())
+  nome       String
+  link       String?
+  concluido  Boolean   @default(false)
+  concluidoEm DateTime?
+  materiaId  String
+  materia    Materia   @relation(fields: [materiaId], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+}
+
+model Sessao {
+  id         String   @id @default(cuid())
+  data       DateTime @default(now())
+  minutos    Int      @default(60)
+  tipo       String   @default("ESTUDO")
+  descricao  String?
+  materiaId  String
+  materia    Materia  @relation(fields: [materiaId], references: [id])
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+}
+
+model Teste {
+  id              String   @id @default(cuid())
+  data            DateTime @default(now())
+  questoesTotal   Int      @default(10)
+  questoesAcertos Int      @default(0)
+  tipo            String   @default("questoes")
+  descricao       String?
+  materiaId       String
+  materia         Materia  @relation(fields: [materiaId], references: [id])
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt       DateTime @default(now())
+}
+
+model MaterialEstudo {
+  id        String   @id @default(cuid())
+  nome      String
+  link      String
+  categoria String   @default("geral")
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
