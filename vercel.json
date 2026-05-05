@@ -1,6 +1,6 @@
-/** @type {import('next').NextConfig} */
-module.exports = {
-  eslint: { ignoreDuringBuilds: true },
-  typescript: { ignoreBuildErrors: false },
-  images: { unoptimized: true },
-};
+{
+  "framework": "nextjs",
+  "buildCommand": "npx prisma generate && next build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install"
+}
