@@ -14,38 +14,28 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Senha', type: 'password' },
       },
       async authorize(credentials) {
-        try {
-          if (!credentials?.email || !credentials?.password) {
-            throw new Error('Email e senha são obrigatórios');
-          }
-
-          console.log('[AUTH] Buscando user:', credentials.email);
-          const user = await prisma.user.findUnique({
-            where: { email: credentials.email },
-          });
-
-          if (!user) {
-            console.log('[AUTH] Usuário não encontrado');
-            throw new Error('Credenciais inválidas');
-          }
-
-          console.log('[AUTH] Usuário encontrado, hash existe:', !!user.hashedPassword);
-          const isValid = await bcrypt.compare(credentials.password, user.hashedPassword!);
-          console.log('[AUTH] Senha válida:', isValid);
-
-          if (!isValid) {
-            throw new Error('Credenciais inválidas');
-          }
-
-          return {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-          };
-        } catch (e: any) {
-          console.error('[AUTH] Erro no authorize:', e.message);
-          throw e;
+        if (!credentials?.email || !credentials?.password) {
+          return null;
         }
+
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email },
+        });
+
+        if (!user || !user.hashedPassword) {
+          return null;
+        }
+
+        const isValid = await bcrypt.compare(credentials.password, user.hashedPassword);
+        if (!isValid) {
+          return null;
+        }
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        };
       },
     }),
   ],
