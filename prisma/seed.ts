@@ -194,16 +194,14 @@ async function main() {
   ];
 
     const seen = new Set<string>();
-  const materiaisUnicos: MaterialInput[] = materiaisData.filter((m: MaterialInput) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const materiaisUnicos: any[] = materiaisData.filter((m: any) => {
     const key = `${m.nome}|${m.link}`;
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
   });
 
-  // Material type with optional materiaNome
-    const materiaisUnicosTyped = materiaisUnicos;
-  
   for (const md of materiaisUnicos) {
     const materiaMatch = md.materiaNome
       ? materiasCriadas.find(m => m.nome === md.materiaNome)
