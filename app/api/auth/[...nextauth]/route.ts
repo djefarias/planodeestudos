@@ -1,5 +1,5 @@
-import NextAuth from 'next-auth';
-import { authOptions } from '@/lib/auth-options';
+import { NextResponse } from 'next/server';
 
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+// Handler mínimo pra evitar 404 nas chamadas do next-auth
+export async function GET() { return NextResponse.redirect(new URL('/')); }
+export async function POST() { return NextResponse.json({}); }
