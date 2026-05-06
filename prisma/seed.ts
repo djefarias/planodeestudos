@@ -174,7 +174,7 @@ async function main() {
   }
 
   // ========== MATERIAIS DE ESTUDO (extraídos do Abacus) ==========
-  const materiaisData: Array<{ nome: string; link: string; categoria: string }> = [
+  const materiaisData: Array<{ nome: string; link: string; categoria: string; materiaNome?: string }> = [
     { nome: 'Caderno de Testes PC-PR', link: 'https://drive.google.com/file/d/1WpZF-LaZ84N4l6Btet2XftAQyNzPjTc_/view?usp=sharing', categoria: 'testes' },
     { nome: 'Ebook 1000Q - PCPR', link: 'https://drive.google.com/file/d/1kIYoFlqdAeyO-maFrbaZ6Cm-3SwSl_Ww/view?usp=sharing', categoria: 'testes' },
     { nome: 'Preparatório Policial Federal', link: 'https://drive.google.com/file/d/1kIYoFlqdAeyO-maFrbaZ6Cm-3SwSl_Ww/view?usp=sharing', categoria: 'testes' },
@@ -194,8 +194,6 @@ async function main() {
   ];
 
     const seen = new Set<string>();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  type MaterialInput = { nome: string; link: string; categoria: string; materiaNome?: string };
   const materiaisUnicos: MaterialInput[] = materiaisData.filter((m: MaterialInput) => {
     const key = `${m.nome}|${m.link}`;
     if (seen.has(key)) return false;
