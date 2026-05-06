@@ -1,10 +1,9 @@
 'use client';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { signOut } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard, BookOpen, FolderOpen, CalendarDays,
-  CheckSquare, FileText, LogOut, BookOpen as Logo
+  CheckSquare, FileText, BookOpen as Logo
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -20,19 +19,11 @@ const NAV_ITEMS = [
 export default function AppShellWrapper({
   children,
   userName,
-  userEmail,
 }: {
   children: React.ReactNode;
   userName: string;
-  userEmail: string;
 }) {
   const pathname = usePathname();
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    await signOut({ redirect: false });
-    router.push('/login');
-  };
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-50">
@@ -69,16 +60,6 @@ export default function AppShellWrapper({
             );
           })}
         </nav>
-
-        <div className="p-3 border-t border-gray-100">
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all"
-          >
-            <LogOut className="w-5 h-5" />
-            Sair
-          </button>
-        </div>
       </aside>
 
       {/* Main Content */}
