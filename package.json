@@ -9,10 +9,10 @@
     "lint": "next lint",
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
-    "seed": "tsx --require dotenv/config prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts"
   },
   "prisma": {
-    "seed": "tsx --require dotenv/config prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
