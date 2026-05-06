@@ -3,13 +3,14 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   BookOpen, Plus, Edit3, Trash2, X, Save, Loader2,
-  ChevronDown, ChevronUp, PlusCircle, ExternalLink
+  ChevronDown, ChevronUp, PlusCircle, ExternalLink, FileText
 } from 'lucide-react';
 
 const CORES = ['#60B5FF', '#FF9149', '#FF9898', '#FF90BB', '#FF6363', '#80D8C3', '#A19AD3', '#72BF78', '#F4A261', '#E76F51', '#2A9D8F', '#264653'];
 
 interface Topico { id: string; nome: string; link?: string | null; concluido: boolean; }
-interface Materia { id: string; nome: string; peso: number; questoes: number; cor: string; driveLink?: string | null; topicos: Topico[]; }
+interface MaterialEstudo { id: string; nome: string; link: string; categoria: string; }
+interface Materia { id: string; nome: string; peso: number; questoes: number; cor: string; driveLink?: string | null; topicos: Topico[]; materiais?: MaterialEstudo[]; }
 
 export default function MateriasContent() {
   const [materias, setMaterias] = useState<Materia[]>([]);

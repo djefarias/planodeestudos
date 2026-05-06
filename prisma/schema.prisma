@@ -32,6 +32,7 @@ model Materia {
   topicos   Topico[]
   sessoes   Sessao[]
   testes    Teste[]
+  materiais MaterialEstudo[]
   createdAt DateTime @default(now())
 }
 
@@ -78,6 +79,8 @@ model MaterialEstudo {
   nome      String
   link      String
   categoria String   @default("geral")
+  materiaId String?
+  materia   Materia? @relation(fields: [materiaId], references: [id], onDelete: SetNull)
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())

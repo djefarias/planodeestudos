@@ -11,7 +11,10 @@ export async function GET() {
 
   const materias = await prisma.materia.findMany({
     where: { userId: user.id },
-    include: { topicos: { orderBy: { createdAt: 'asc' } } },
+    include: {
+      topicos: { orderBy: { createdAt: 'asc' } },
+      materiais: { orderBy: { createdAt: 'asc' } },
+    },
     orderBy: { createdAt: 'asc' },
   });
   return NextResponse.json(materias ?? []);

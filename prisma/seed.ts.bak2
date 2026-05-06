@@ -181,12 +181,12 @@ async function main() {
     { nome: 'Prep PRF', link: 'https://drive.google.com/file/d/19bSvlnKpv-5CqCOm5uDr2jjXNnsDUfMq/view?usp=sharing', categoria: 'testes' },
     { nome: 'Prep PRF - 2', link: 'https://drive.google.com/file/d/1tU5FtYCes2yJ6-Pt8kIyoTyxCzlVm-BE/view?usp=sharing', categoria: 'testes' },
     { nome: 'Gabarito PRF', link: 'https://drive.google.com/file/d/1CDqeFnDF7cWHP4cxIvxqXXjKuNSr676y/view?usp=sharing', categoria: 'testes' },
-    { nome: 'DIREITO CONSTITUCIONAL', materiaNome: 'Direito Constitucional', link: 'https://drive.google.com/file/d/17pyRrpAyL4fvspZSFsVr1ohEQAzcEAwS/view?usp=drive_link', categoria: 'testes' },
-    { nome: 'DIREITOS HUMANOS', materiaNome: 'Direito Constitucional', link: 'https://drive.google.com/file/d/1fw0JVApMDzDvmUfC7pEd02sxez0JyP84/view?usp=drive_link', categoria: 'testes' },
-    { nome: 'INFORMÁTICA', materiaNome: 'Informática', link: 'https://drive.google.com/file/d/1MT2R4ZuNbk79G4X1P_rHWV6Oa5_OZEsp/view?usp=drive_link', categoria: 'testes' },
-    { nome: 'LEGISLAÇÃO PRF', materiaNome: 'Legislação Penal', link: 'https://drive.google.com/file/d/1vNHq_f6oI39ISV9gBYrf4pnAl3u_qlCi/view?usp=drive_link', categoria: 'testes' },
+    { nome: 'DIREITO CONSTITUCIONAL', link: 'https://drive.google.com/file/d/17pyRrpAyL4fvspZSFsVr1ohEQAzcEAwS/view?usp=drive_link', categoria: 'testes' },
+    { nome: 'DIREITOS HUMANOS', link: 'https://drive.google.com/file/d/1fw0JVApMDzDvmUfC7pEd02sxez0JyP84/view?usp=drive_link', categoria: 'testes' },
+    { nome: 'INFORMÁTICA', link: 'https://drive.google.com/file/d/1MT2R4ZuNbk79G4X1P_rHWV6Oa5_OZEsp/view?usp=drive_link', categoria: 'testes' },
+    { nome: 'LEGISLAÇÃO PRF', link: 'https://drive.google.com/file/d/1vNHq_f6oI39ISV9gBYrf4pnAl3u_qlCi/view?usp=drive_link', categoria: 'testes' },
     { nome: 'PROVA PF-AGENTE - 600 QUESTÕES', link: 'https://drive.google.com/file/d/10qZOP8K3q7msefa4ZvyZLcVkOn9ESK70/view?usp=drive_link', categoria: 'testes' },
-    { nome: 'PORTUGUÊS QUESTÕES', materiaNome: 'Português', link: 'https://drive.google.com/file/d/12kqoLobgwtDuqvk_MRdyAOvhyJSGlGna/view?usp=drive_link', categoria: 'testes' },
+    { nome: 'PORTUGUÊS QUESTÕES', link: 'https://drive.google.com/file/d/12kqoLobgwtDuqvk_MRdyAOvhyJSGlGna/view?usp=drive_link', categoria: 'testes' },
     { nome: 'Dicas de Estudo - Guia', link: 'https://drive.google.com/drive/folders/10PtGyzG4pJxJqo5JZU2BPH_2AJZhmxiw?usp=sharing', categoria: 'dicas' },
     { nome: 'Análise Estratégica da Banca', link: 'https://drive.google.com/drive/folders/1K1vmaBLkTcmzUIkZv1lY4TSHXU-plAYm?usp=sharing', categoria: 'estrategia' },
     { nome: 'Plano Personalizado de Estudos', link: 'https://drive.google.com/drive/folders/1ITMPLHZgg9qKaCRe3q97iS5vhl8BJ9FS?usp=sharing', categoria: 'plano' },
@@ -201,26 +201,16 @@ async function main() {
     return true;
   });
 
-  // Material type with optional materiaNome
-  type MaterialInput = { nome: string; link: string; categoria: string; materiaNome?: string };
-  
-  const materiaisUnicosTyped = materiaisUnicos as MaterialInput[];
-  
-  for (const md of materiaisUnicosTyped) {
-    const materiaMatch = md.materiaNome
-      ? materiasCriadas.find(m => m.nome === md.materiaNome)
-      : null;
-
+  for (const md of materiaisUnicos) {
     await prisma.materialEstudo.create({
       data: {
         nome: md.nome,
         link: md.link,
         categoria: md.categoria,
-        materiaId: materiaMatch?.id ?? null,
         userId: user.id,
       },
     });
-    console.log(`📚 Material: ${md.nome} (${md.categoria})${materiaMatch ? ` → ${materiaMatch.nome}` : ''}`);
+    console.log(`📚 Material: ${md.nome} (${md.categoria})`);
   }
 
   console.log('\n🔑 Credenciais de acesso:');
