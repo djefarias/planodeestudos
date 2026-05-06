@@ -193,8 +193,10 @@ async function main() {
     { nome: 'Mapas Mentais', link: 'https://drive.google.com/drive/folders/1UWWqRffzWwQfXmLLyhXAXqpPx69MNMtG?usp=sharing', categoria: 'geral' },
   ];
 
-  const seen = new Set<string>();
-  const materiaisUnicos = materiaisData.filter(m => {
+    const seen = new Set<string>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  type MaterialInput = { nome: string; link: string; categoria: string; materiaNome?: string };
+  const materiaisUnicos: MaterialInput[] = materiaisData.filter((m: MaterialInput) => {
     const key = `${m.nome}|${m.link}`;
     if (seen.has(key)) return false;
     seen.add(key);
@@ -202,11 +204,9 @@ async function main() {
   });
 
   // Material type with optional materiaNome
-  type MaterialInput = { nome: string; link: string; categoria: string; materiaNome?: string };
+    const materiaisUnicosTyped = materiaisUnicos;
   
-  const materiaisUnicosTyped = materiaisUnicos as MaterialInput[];
-  
-  for (const md of materiaisUnicosTyped) {
+  for (const md of materiaisUnicos) {
     const materiaMatch = md.materiaNome
       ? materiasCriadas.find(m => m.nome === md.materiaNome)
       : null;
