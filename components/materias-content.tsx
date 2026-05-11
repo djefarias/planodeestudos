@@ -12,7 +12,27 @@ interface Topico { id: string; nome: string; link?: string | null; concluido: bo
 interface MaterialEstudo { id: string; nome: string; link: string; categoria: string; }
 interface Materia { id: string; nome: string; peso: number; questoes: number; cor: string; driveLink?: string | null; topicos: Topico[]; materiais?: MaterialEstudo[]; }
 
-export default function MateriasContent() {
+interface TopicoLinks {
+  [materiaNome: string]: Array<{ nome: string; link: string; materia: string }>;
+}
+
+function getTopicoLink(topicoNome: string, materiaNome: string, topicoLinks?: TopicoLinks): string | null {
+  if (!topicoLinks) return null;
+  const materiaLinks = topicoLinks[materiaNome];
+  if (!materiaLinks) return null;
+  const match = materiaLinks.find(
+    t => t.nome.toLowerCase().trim() === topicoNome.toLowerCase().trim()
+  );
+  if (match) return match.link;
+  // Fallback: partial match
+  const partial = materiaLinks.find(
+    t => t.nome.toLowerCase().trim().includes(topicoNome.toLowerCase().trim()) ||
+         topicoNome.toLowerCase().trim().includes(t.nome.toLowerCase().trim())
+  );
+  return partial?.link ?? null;
+}
+
+export default function MateriasContent({ topicoLinks }: { topicoLinks?: TopicoLinks }) {
   const [materias, setMaterias] = useState<Materia[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -172,17 +192,30 @@ export default function MateriasContent() {
                 {isExpanded && (
                   <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} exit={{ height: 0 }} className="overflow-hidden">
                     <div className="px-5 pb-4 space-y-2 border-t border-gray-50 pt-3">
-                      {(materia?.topicos ?? []).map((t: Topico) => (
-                        <div key={t?.id} className="flex items-center justify-between py-1.5 px-3 bg-gray-50 rounded-lg">
-                          <div className="flex items-center gap-2 flex-1 min-w-0">
-                            {t?.link && <span className="text-red-500 flex-shrink-0" title="PDF vinculado">📄</span>}
-                            <span className={`text-sm truncate ${t?.concluido ? 'line-through text-gray-400' : 'text-gray-700'}`}>{t?.nome ?? ''}</span>
+                      {(materia?.topicos ?? []).map((t: Topico) => {
+                        const linkDoTopico = t.link || getTopicoLink(t.nome, materia.nome, topicoLinks);
+                        return (
+                          <div key={t?.id} className="flex items-center justify-between py-1.5 px-3 bg-gray-50 rounded-lg">
+                            <div className="flex items-center gap-2 flex-1 min-w-0">
+                              {linkDoTopico && (
+                                <a href={linkDoTopico} target="_blank" rel="noopener noreferrer" className="text-red-500 hover:text-red-700 flex-shrink-0" title="Abrir PDF">
+                                  <FileText className="w-4 h-4" />
+                                </a>
+                              )}
+                              {linkDoTopico ? (
+                                <a href={linkDoTopico} target="_blank" rel="noopener noreferrer" className={`text-sm truncate hover:text-indigo-600 transition-colors ${t?.concluido ? 'line-through text-gray-400' : 'text-gray-700'}`}>
+                                  {t?.nome ?? ''}
+                                </a>
+                              ) : (
+                                <span className={`text-sm truncate ${t?.concluido ? 'line-through text-gray-400' : 'text-gray-700'}`}>{t?.nome ?? ''}</span>
+                              )}
+                            </div>
+                            <button onClick={() => handleDeleteTopico(t?.id ?? '')} className="p-1 text-gray-300 hover:text-red-500 transition-colors flex-shrink-0">
+                              <X className="w-3.5 h-3.5" />
+                            </button>
                           </div>
-                          <button onClick={() => handleDeleteTopico(t?.id ?? '')} className="p-1 text-gray-300 hover:text-red-500 transition-colors flex-shrink-0">
-                            <X className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      ))}
+                        );
+                      })}
                       <div className="flex gap-2 mt-2">
                         <input
                           type="text"
