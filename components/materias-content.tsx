@@ -20,21 +20,27 @@ function getTopicoLink(topicoNome: string, materiaNome: string, topicoLinks?: To
   if (!topicoLinks) return null;
   const materiaLinks = topicoLinks[materiaNome];
   if (!materiaLinks) return null;
-  const match = materiaLinks.find(
+  // Exact match
+  const exact = materiaLinks.find(
     t => t.nome.toLowerCase().trim() === topicoNome.toLowerCase().trim()
   );
-  if (match) return match.link;
-  // Fallback: partial match
-  const partial = materiaLinks.find(
-    t => t.nome.toLowerCase().trim().includes(topicoNome.toLowerCase().trim()) ||
-         topicoNome.toLowerCase().trim().includes(t.nome.toLowerCase().trim())
+  if (exact) return exact.link;
+  // Partial match - tema dentro do nome do tópico ou vice-versa
+  const partial = materiaLinks.find(t =>
+    t.nome.toLowerCase().trim().includes(topicoNome.toLowerCase().trim()) ||
+    topicoNome.toLowerCase().trim().includes(t.nome.toLowerCase().trim()) ||
+    // Match por palavra-chave (ex: "Seqüências" match "Sequências Lógicas")
+    topicoNome.toLowerCase().split(/\s+/).some(word => word.length > 4 && t.nome.toLowerCase().includes(word))
   );
   return partial?.link ?? null;
 }
 
+import materiasSeedData from '@/data/materias-mock.json';
+
 export default function MateriasContent({ topicoLinks }: { topicoLinks?: TopicoLinks }) {
-  const [materias, setMaterias] = useState<Materia[]>([]);
+  const [materias, setMaterias] = useState<Materia[]>(materiasSeedData as Materia[]);
   const [loading, setLoading] = useState(true);
+  const [apiError, setApiError] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({ nome: '', peso: 1, questoes: 10, cor: '#60B5FF', topicos: '', driveLink: '' });
@@ -46,8 +52,14 @@ export default function MateriasContent({ topicoLinks }: { topicoLinks?: TopicoL
   const fetchMaterias = useCallback(async () => {
     try {
       const res = await fetch('/api/materias');
-      if (res.ok) setMaterias(await res.json() ?? []);
-    } catch (err: any) { console.error(err); }
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          setMaterias(data);
+          setApiError(false);
+        }
+      }
+    } catch (err: any) { console.error('API error, usando dados locais:', err); setApiError(true); }
     setLoading(false);
   }, []);
 
@@ -104,15 +116,23 @@ export default function MateriasContent({ topicoLinks }: { topicoLinks?: TopicoL
   };
 
   const handleDeleteTopico = async (topicoId: string) => {
+    if (!confirm('Excluir este tópico?')) return;
     try {
       await fetch(`/api/topicos/${topicoId}`, { method: 'DELETE' });
       await fetchMaterias();
     } catch (err: any) { console.error(err); }
   };
 
-  const startEdit = (m: Materia) => {
-    setEditingId(m?.id ?? null);
-    setFormData({ nome: m?.nome ?? '', peso: m?.peso ?? 1, questoes: m?.questoes ?? 10, cor: m?.cor ?? '#60B5FF', topicos: '', driveLink: m?.driveLink ?? '' });
+  const startEdit = (materia: any) => {
+    setEditingId(materia.id);
+    setFormData({
+      nome: materia.nome ?? '',
+      peso: materia.peso ?? 1,
+      questoes: materia.questoes ?? 10,
+      cor: materia.cor ?? '#60B5FF',
+      topicos: '',
+      driveLink: materia.driveLink ?? '',
+    });
     setShowForm(true);
   };
 
@@ -130,6 +150,11 @@ export default function MateriasContent({ topicoLinks }: { topicoLinks?: TopicoL
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Matérias</h1>
           <p className="text-gray-500 mt-1">Gerencie as matérias e tópicos do seu plano de estudos</p>
+          {apiError && (
+            <p className="text-xs text-amber-600 mt-1">
+              ⚠ Modo local (sem conexão com o banco de dados)
+            </p>
+          )}
         </div>
         <button
           onClick={() => { setShowForm(true); setEditingId(null); setFormData({ nome: '', peso: 1, questoes: 10, cor: '#60B5FF', topicos: '', driveLink: '' }); }}

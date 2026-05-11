@@ -1,0 +1,500 @@
+[
+  {
+    "id": "seed_0",
+    "nome": "Português",
+    "peso": 3,
+    "questoes": 15,
+    "cor": "#60B5FF",
+    "driveLink": "https://drive.google.com/drive/folders/19JwAb-FWecOPjaWpC7RWFXHMBpwbypp1?usp=sharing",
+    "topicos": [
+      {
+        "id": "seed_0_t0",
+        "nome": "Interpretação de textos",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_0_t1",
+        "nome": "Morfologia",
+        "link": "https://drive.google.com/drive/folders/19kKsWkXgetQBhJFqg96EdyFmSX4_3DYY?usp=drive_link",
+        "concluido": false
+      },
+      {
+        "id": "seed_0_t2",
+        "nome": "Sintaxe",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_0_t3",
+        "nome": "Ortografia",
+        "link": "https://drive.google.com/file/d/1mZ-SJt48MD-5N8vN24w_Tj1WeF1YHT4k/view?usp=drive_link",
+        "concluido": false
+      },
+      {
+        "id": "seed_0_t4",
+        "nome": "Literatura brasileira",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_0_t5",
+        "nome": "Concordância verbal e nominal",
+        "link": "https://drive.google.com/file/d/1sfynkyn9VgvwCQyHof8uPwrymprxMXPv/view?usp=drive_link",
+        "concluido": false
+      }
+    ]
+  },
+  {
+    "id": "seed_1",
+    "nome": "Raciocínio Lógico",
+    "peso": 2,
+    "questoes": 10,
+    "cor": "#FF9149",
+    "driveLink": "https://drive.google.com/drive/folders/1oqqgx4lkWLbAWwuoUAuhxq-_3NAJ5niV?usp=sharing",
+    "topicos": [
+      {
+        "id": "seed_1_t0",
+        "nome": "Estruturas lógicas",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_1_t1",
+        "nome": "Diagramas",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_1_t2",
+        "nome": "Sequências",
+        "link": "https://drive.google.com/file/d/1U-8UG6pT0NlznSSugd49cl7TrfEfbN3x/view?usp=drive_link",
+        "concluido": false
+      },
+      {
+        "id": "seed_1_t3",
+        "nome": "Argumentação",
+        "link": null,
+        "concluido": false
+      }
+    ]
+  },
+  {
+    "id": "seed_2",
+    "nome": "Informática",
+    "peso": 2,
+    "questoes": 10,
+    "cor": "#FF9898",
+    "driveLink": "https://drive.google.com/drive/folders/1Xie4axrwjx9PadXG3UISpPgApAG-LYfp?usp=sharing",
+    "topicos": [
+      {
+        "id": "seed_2_t0",
+        "nome": "Sistemas operacionais",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_2_t1",
+        "nome": "Pacote Office",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_2_t2",
+        "nome": "Internet e redes",
+        "link": "https://drive.google.com/file/d/1W_JX1nER1GUDUw_ejWlj3YpU2fZms8tu/view?usp=drive_link",
+        "concluido": false
+      },
+      {
+        "id": "seed_2_t3",
+        "nome": "Segurança da informação",
+        "link": null,
+        "concluido": false
+      }
+    ]
+  },
+  {
+    "id": "seed_3",
+    "nome": "Direito Constitucional",
+    "peso": 3,
+    "questoes": 10,
+    "cor": "#FF90BB",
+    "driveLink": "https://drive.google.com/drive/folders/1h52HXfxrLMIoin-HboHz_92AcaksBqyt?usp=sharing",
+    "topicos": [
+      {
+        "id": "seed_3_t0",
+        "nome": "Princípios fundamentais",
+        "link": "https://drive.google.com/file/d/1YKYnWrS0oA06rmQakO4Ya6iPMD5bJp6L/view?usp=drive_link",
+        "concluido": false
+      },
+      {
+        "id": "seed_3_t1",
+        "nome": "Direitos e garantias fundamentais",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_3_t2",
+        "nome": "Organização do Estado",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_3_t3",
+        "nome": "Poder Legislativo",
+        "link": "https://drive.google.com/file/d/1-rlUA1UplLob3Df6M9JAZ3j5J7dRSL0f/view?usp=drive_link",
+        "concluido": false
+      },
+      {
+        "id": "seed_3_t4",
+        "nome": "Poder Executivo",
+        "link": "https://drive.google.com/file/d/17ELN2AqV_0WoPSroM7MNB6oI99mss_gI/view?usp=drive_link",
+        "concluido": false
+      },
+      {
+        "id": "seed_3_t5",
+        "nome": "Poder Judiciário",
+        "link": null,
+        "concluido": false
+      }
+    ]
+  },
+  {
+    "id": "seed_4",
+    "nome": "Direito Administrativo",
+    "peso": 3,
+    "questoes": 10,
+    "cor": "#FF6363",
+    "driveLink": "https://drive.google.com/drive/folders/1UekTcMOfJrDoCjWYcFe7RbQZJFw31vQ7?usp=sharing",
+    "topicos": [
+      {
+        "id": "seed_4_t0",
+        "nome": "Princípios administrativos",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_4_t1",
+        "nome": "Poderes administrativos",
+        "link": "https://drive.google.com/file/d/1fgIvVpbjJXPyBxlqIy-bZUGtl4E5yUEf/view?usp=drive_link",
+        "concluido": false
+      },
+      {
+        "id": "seed_4_t2",
+        "nome": "Atos administrativos",
+        "link": "https://drive.google.com/file/d/10xrvBtD4rXS2nygk1L394a3nlCadpCdY/view?usp=drive_link",
+        "concluido": false
+      },
+      {
+        "id": "seed_4_t3",
+        "nome": "Licitações",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_4_t4",
+        "nome": "Servidores públicos",
+        "link": null,
+        "concluido": false
+      }
+    ]
+  },
+  {
+    "id": "seed_5",
+    "nome": "Direito Penal",
+    "peso": 2,
+    "questoes": 8,
+    "cor": "#80D8C3",
+    "driveLink": "https://drive.google.com/drive/folders/1WnAES4ZFEPR-DLQAyEtlJC1S9vsbsrpJ?usp=sharing",
+    "topicos": [
+      {
+        "id": "seed_5_t0",
+        "nome": "Teoria geral do crime",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_5_t1",
+        "nome": "Crimes contra a pessoa",
+        "link": "https://drive.google.com/file/d/1UNzp2z4XSusqfj7tMz89UYIWaVz9NLfR/view?usp=drive_link",
+        "concluido": false
+      },
+      {
+        "id": "seed_5_t2",
+        "nome": "Crimes contra o patrimônio",
+        "link": "https://drive.google.com/file/d/1moclq6Lr_IZk8lXSDmDFXY4rLmjzclno/view?usp=drive_link",
+        "concluido": false
+      },
+      {
+        "id": "seed_5_t3",
+        "nome": "Crimes contra a administração",
+        "link": "https://drive.google.com/file/d/13-z9oLeEh_HPtuXeXA5dJD-dW4GfwNHp/view?usp=drive_link",
+        "concluido": false
+      }
+    ]
+  },
+  {
+    "id": "seed_6",
+    "nome": "Processo Penal",
+    "peso": 2,
+    "questoes": 8,
+    "cor": "#A19AD3",
+    "driveLink": "https://drive.google.com/drive/folders/1ugQk-77xbuVIUJe-hFK6TlHlBEOEqQ_I?usp=sharing",
+    "topicos": [
+      {
+        "id": "seed_6_t0",
+        "nome": "Inquérito policial",
+        "link": "https://drive.google.com/file/d/18tRkv9CehiPKTYIOhU9d2sg9Gc8taICv/view?usp=drive_link",
+        "concluido": false
+      },
+      {
+        "id": "seed_6_t1",
+        "nome": "Ação penal",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_6_t2",
+        "nome": "Provas",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_6_t3",
+        "nome": "Recursos",
+        "link": null,
+        "concluido": false
+      }
+    ]
+  },
+  {
+    "id": "seed_7",
+    "nome": "Legislação Penal",
+    "peso": 2,
+    "questoes": 8,
+    "cor": "#72BF78",
+    "driveLink": "https://drive.google.com/drive/folders/1YSnqYI2C78QIHw4zr3K02wVLQP4YnL0Y?usp=sharing",
+    "topicos": [
+      {
+        "id": "seed_7_t0",
+        "nome": "Lei de execução penal",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_7_t1",
+        "nome": "Lei de drogas",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_7_t2",
+        "nome": "Juizados especiais criminais",
+        "link": null,
+        "concluido": false
+      }
+    ]
+  },
+  {
+    "id": "seed_8",
+    "nome": "Direito Civil",
+    "peso": 2,
+    "questoes": 8,
+    "cor": "#80D8C3",
+    "driveLink": null,
+    "topicos": [
+      {
+        "id": "seed_8_t0",
+        "nome": "Parte geral",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_8_t1",
+        "nome": "Obrigações",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_8_t2",
+        "nome": "Contratos",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_8_t3",
+        "nome": "Responsabilidade civil",
+        "link": null,
+        "concluido": false
+      }
+    ]
+  },
+  {
+    "id": "seed_9",
+    "nome": "Regimento Interno",
+    "peso": 2,
+    "questoes": 10,
+    "cor": "#72BF78",
+    "driveLink": null,
+    "topicos": [
+      {
+        "id": "seed_9_t0",
+        "nome": "Estrutura do tribunal",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_9_t1",
+        "nome": "Competências",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_9_t2",
+        "nome": "Processo e julgamento",
+        "link": null,
+        "concluido": false
+      }
+    ]
+  },
+  {
+    "id": "seed_10",
+    "nome": "Atualidades",
+    "peso": 1,
+    "questoes": 5,
+    "cor": "#F4A261",
+    "driveLink": null,
+    "topicos": [
+      {
+        "id": "seed_10_t0",
+        "nome": "Política nacional",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_10_t1",
+        "nome": "Economia",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_10_t2",
+        "nome": "Sociedade",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_10_t3",
+        "nome": "Meio ambiente",
+        "link": null,
+        "concluido": false
+      }
+    ]
+  },
+  {
+    "id": "seed_11",
+    "nome": "Redação / Discursiva",
+    "peso": 3,
+    "questoes": 2,
+    "cor": "#E76F51",
+    "driveLink": null,
+    "topicos": [
+      {
+        "id": "seed_11_t0",
+        "nome": "Estrutura dissertativa",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_11_t1",
+        "nome": "Coesão e coerência",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_11_t2",
+        "nome": "Argumentação",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_11_t3",
+        "nome": "Propostas de intervenção",
+        "link": null,
+        "concluido": false
+      }
+    ]
+  },
+  {
+    "id": "seed_12",
+    "nome": "Inglês",
+    "peso": 1,
+    "questoes": 5,
+    "cor": "#2A9D8F",
+    "driveLink": null,
+    "topicos": [
+      {
+        "id": "seed_12_t0",
+        "nome": "Interpretação de textos",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_12_t1",
+        "nome": "Vocabulário",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_12_t2",
+        "nome": "Estruturas gramaticais",
+        "link": null,
+        "concluido": false
+      }
+    ]
+  },
+  {
+    "id": "seed_13",
+    "nome": "Específica",
+    "peso": 3,
+    "questoes": 15,
+    "cor": "#264653",
+    "driveLink": null,
+    "topicos": [
+      {
+        "id": "seed_13_t0",
+        "nome": "Conteúdo específico do cargo",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_13_t1",
+        "nome": "Legislação pertinente",
+        "link": null,
+        "concluido": false
+      }
+    ]
+  },
+  {
+    "id": "seed_14",
+    "nome": "MAPAS MENTAIS",
+    "peso": 1,
+    "questoes": 10,
+    "cor": "#264653",
+    "driveLink": "https://drive.google.com/drive/folders/1UWWqRffzWwQfXmLLyhXAXqpPx69MNMtG?usp=sharing",
+    "topicos": [
+      {
+        "id": "seed_14_t0",
+        "nome": "Revisão geral",
+        "link": null,
+        "concluido": false
+      },
+      {
+        "id": "seed_14_t1",
+        "nome": "Mapas mentais por matéria",
+        "link": null,
+        "concluido": false
+      }
+    ]
+  }
+]
