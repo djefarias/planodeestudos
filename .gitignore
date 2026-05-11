@@ -7,3 +7,5 @@ node_modules/
 .env
 .vercel
 \n# Google Drive service account (secret)\ndata/gdrive-sa.json
+\ndata/gdrive-sa.json
+data/gdrive-files.json
