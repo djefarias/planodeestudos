@@ -6,3 +6,4 @@ node_modules/
 *.db-journal
 .env
 .vercel
+\n# Google Drive service account (secret)\ndata/gdrive-sa.json
