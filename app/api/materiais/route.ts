@@ -3,6 +3,8 @@ import { getServerAuthSession } from "@/lib/auth-options";
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const session = { user: { id: "anon", email: "dje.reis.17@gmail.com", name: "Jefferson" } };
   if (!session?.user?.email) return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
