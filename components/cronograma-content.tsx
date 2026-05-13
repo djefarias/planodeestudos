@@ -19,7 +19,22 @@ const DICAS = [
   'Use a técnica Pomodoro: 25min foco, 5min pausa.',
 ];
 
+type EstadoTopico = 'nao_iniciado' | 'em_andamento' | 'concluido';
+
 interface Topico { id: string; nome: string; link?: string | null; concluido: boolean; }
+
+// Mapeamento de estados para os checkbox
+const PROXIMO_ESTADO: Record<EstadoTopico, EstadoTopico> = {
+  'nao_iniciado': 'em_andamento',
+  'em_andamento': 'concluido',
+  'concluido': 'nao_iniciado',
+};
+
+const ESTADO_ICONE: Record<EstadoTopico, { icone: string; cor: string; bg: string; label: string }> = {
+  'nao_iniciado': { icone: '○', cor: '#D1D5DB', bg: 'bg-gray-50', label: 'Não iniciado' },
+  'em_andamento': { icone: '◐', cor: '#F59E0B', bg: 'bg-amber-50', label: 'Em andamento' },
+  'concluido': { icone: '●', cor: '#10B981', bg: 'bg-green-50', label: 'Concluído' },
+};
 interface Materia { id: string; nome: string; peso: number; questoes: number; cor: string; topicos: Topico[]; }
 interface Sessao { id: string; materiaNome: string; materiaCor: string; minutos: number; tipo: string; descricao: string; timestamp: number; }
 
@@ -105,8 +120,8 @@ export default function CronogramaPage() {
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState<'semana' | 'completo'>('semana');
   
-  // Estados de conclusão por tópico (persistidos no localStorage)
-  const [concluidos, setConcluidos] = useState<Record<string, boolean>>({});
+  // Estados de conclusão por tópico (3 estados, persistidos no localStorage)
+  const [concluidos, setConcluidos] = useState<Record<string, EstadoTopico>>({});
   // Sessões de estudo
   const [sessoes, setSessoes] = useState<Sessao[]>([]);
   // Modal de registrar sessão
@@ -162,10 +177,10 @@ export default function CronogramaPage() {
   const materiasEstudadasHoje = [...new Set(sessoesHoje.map(s => s.materiaNome))];
 
   const toggleConcluido = (topicoId: string) => {
-    setConcluidos(prev => ({
-      ...prev,
-      [topicoId]: !prev[topicoId]
-    }));
+    setConcluidos(prev => {
+      const atual: EstadoTopico = prev[topicoId] || 'nao_iniciado';
+      return { ...prev, [topicoId]: PROXIMO_ESTADO[atual] };
+    });
   };
 
   const registrarSessao = (e: React.FormEvent) => {
@@ -326,7 +341,7 @@ export default function CronogramaPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                   {dia.materias.map((m: Materia) => {
                     const topicosMateria = m.topicos || [];
-                    const concluidosMateria = topicosMateria.filter(t => concluidos[t.id]).length;
+                    const concluidosMateria = topicosMateria.filter(t => concluidos[t.id] === "concluido").length;
                     return (
                       <div
                         key={m.id}
@@ -398,7 +413,8 @@ export default function CronogramaPage() {
               const topicos = m.topicos || [];
               const isExpanded = expandedMateria === m.id;
               const total = topicos.length;
-              const concluidosCount = topicos.filter(t => concluidos[t.id]).length;
+              const concluidosCount = topicos.filter(t => concluidos[t.id] === 'concluido').length;
+              const emAndamentoCount = topicos.filter(t => concluidos[t.id] === 'em_andamento').length;
 
               return (
                 <div key={m.id} className="border border-gray-100 rounded-xl overflow-hidden">
@@ -408,7 +424,7 @@ export default function CronogramaPage() {
                   >
                     <div className="w-3.5 h-3.5 rounded-full flex-shrink-0" style={{ backgroundColor: m.cor }} />
                     <span className="font-medium text-gray-900 flex-1">{m.nome}</span>
-                    <span className="text-sm text-gray-500">{concluidosCount}/{total}</span>
+                    <span className="text-sm text-gray-500">{concluidosCount}/{total}{emAndamentoCount > 0 ? ` (+${emAndamentoCount} em andamento)` : ''}</span>
                     {isExpanded ? <ChevronDown className="w-4 h-4 text-gray-400" /> : <ChevronRight className="w-4 h-4 text-gray-400" />}
                   </button>
                   <AnimatePresence>
@@ -426,16 +442,24 @@ export default function CronogramaPage() {
                             topicos.map(t => (
                               <label
                                 key={t.id}
-                                className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-gray-50 cursor-pointer group"
+                                className="flex items-center gap-3 p-2.5 rounded-lg cursor-pointer group transition-colors"
+                                style={{ backgroundColor: ESTADO_ICONE[concluidos[t.id] || 'nao_iniciado'].bg }}
                               >
-                                <input
-                                  type="checkbox"
-                                  checked={!!concluidos[t.id]}
-                                  onChange={() => toggleConcluido(t.id)}
-                                  className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                />
-                                <span className={`text-sm flex-1 ${concluidos[t.id] ? 'line-through text-gray-400' : 'text-gray-700'}`}>
+                                <div className="relative flex items-center justify-center w-6 h-6">
+                                  <span
+                                    onClick={(e) => { e.preventDefault(); toggleConcluido(t.id); }}
+                                    className="text-lg cursor-pointer select-none transition-transform hover:scale-125"
+                                    style={{ color: ESTADO_ICONE[concluidos[t.id] || 'nao_iniciado'].cor }}
+                                    title={ESTADO_ICONE[concluidos[t.id] || 'nao_iniciado'].label}
+                                  >
+                                    {ESTADO_ICONE[concluidos[t.id] || 'nao_iniciado'].icone}
+                                  </span>
+                                </div>
+                                <span className={`text-sm flex-1 ${(concluidos[t.id]) === 'concluido' ? 'line-through text-gray-400' : 'text-gray-700'}`}>
                                   {t.nome}
+                                </span>
+                                <span className="text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity mr-1">
+                                  {ESTADO_ICONE[concluidos[t.id] || 'nao_iniciado'].label}
                                 </span>
                                 {t.link && (
                                   <a
