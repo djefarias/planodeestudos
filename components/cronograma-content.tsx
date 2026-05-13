@@ -27,31 +27,23 @@ interface Sessao { id: string; materiaNome: string; materiaCor: string; minutos:
 const LS_KEY_CONCLUIDOS = 'ppe_topicos_concluidos';
 const LS_KEY_SESSOES = 'ppe_sessoes';
 
-// ===== ALGORITMO DE DISTRIBUIÇÃO =====
-function gerarCronograma(materias: Materia[], dias: number = 28) {
+// ===== CRONOGRAMA FIXO POR DIA DA SEMANA =====
+// Distribuição fixa: cada dia da semana tem matérias definidas (sem aleatoriedade)
+const CRONOGRAMA_FIXO: Record<number, string[]> = {
+  0: [],                           // Domingo - descanso/simulado (sem matérias fixas no grid)
+  1: ['Direito Penal'],            // Segunda
+  2: ['Processo Penal'],           // Terça
+  3: ['Português'],                // Quarta
+  4: ['Direito Constitucional', 'Direito Administrativo'], // Quinta
+  5: ['Informática', 'Raciocínio Lógico', 'Legislação Especial'], // Sexta
+  6: [],                           // Sábado - revisão (sem matérias fixas no grid)
+};
+
+function gerarCronograma(materias: Materia[], dias: number = 90) {
   const hoje = new Date();
   hoje.setHours(0, 0, 0, 0);
-  
-  // Distribuir: as matérias com maior peso e mais questões aparecem mais vezes
-  const materiasOrdenadas = [...materias].sort((a, b) => (b.peso + b.questoes/10) - (a.peso + a.questoes/10));
-  
-  // Criar ciclo rotacionado
-  const ciclo: Materia[] = [];
-  // Cada matéria aparece peso * 2 vezes no ciclo
-  for (const m of materiasOrdenadas) {
-    const repeticoes = Math.max(1, Math.round(m.peso * 1.5));
-    for (let i = 0; i < repeticoes; i++) {
-      ciclo.push(m);
-    }
-  }
-  // Embaralhar mantendo distribuição
-  for (let i = ciclo.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [ciclo[i], ciclo[j]] = [ciclo[j], ciclo[i]];
-  }
 
   const resultado: Array<{ data: string; diaSemana: string; materias: Materia[]; totalHoras: number }> = [];
-  let cicloIdx = 0;
 
   for (let d = 0; d < dias; d++) {
     const dataAtual = new Date(hoje);
@@ -59,16 +51,13 @@ function gerarCronograma(materias: Materia[], dias: number = 28) {
     const diaSemana = dataAtual.getDay();
     const dataStr = dataAtual.toLocaleDateString('pt-BR');
 
+    const nomesMateriasHoje = CRONOGRAMA_FIXO[diaSemana] || [];
     const materiasHoje: Materia[] = [];
 
-    if (diaSemana !== 0) { // Sábado: 2, Seg-Sex: 3
-      const qtde = diaSemana === 6 ? 2 : 3;
-      for (let i = 0; i < qtde && cicloIdx < ciclo.length; i++) {
-        const m = ciclo[cicloIdx % ciclo.length];
-        if (!materiasHoje.find(x => x.id === m.id)) {
-          materiasHoje.push(m);
-          cicloIdx++;
-        }
+    for (const nome of nomesMateriasHoje) {
+      const materia = materias.find(m => m.nome === nome);
+      if (materia) {
+        materiasHoje.push(materia);
       }
     }
 
@@ -76,7 +65,7 @@ function gerarCronograma(materias: Materia[], dias: number = 28) {
       data: dataStr,
       diaSemana: DIAS_SEMANA[diaSemana],
       materias: materiasHoje,
-      totalHoras: materiasHoje.length * 1.5,
+      totalHoras: Math.max(1, materiasHoje.length * 1.5),
     });
   }
 
